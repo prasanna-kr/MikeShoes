@@ -45,13 +45,6 @@
                                 </td>
                             </tr>
                         <% end %>
-                            <tr class="bottom_button">
-                                <td>
-                                    <a class="gray_btn" href="#">Update Cart</a>
-                                </td>                            
-                                <td>
-                                </td>
-                            </tr>
                             <tr>
                                 <td>
 
@@ -80,7 +73,11 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="#">Continue Shopping</a>
-                                        <a class="primary-btn" href="#">Proceed to checkout</a>
+                                        <% if user_signed_in? %>
+                                            <%= link_to "Checkout",cart_checkout_path(:cart_id=>cart.id), class: "primary-btn"%>
+                                        <% else %>
+                                            <%= link_to "Checkout", new_user_session_path %>
+                                        <% end %>
                                     </div>
                                 </td>
                             </tr>

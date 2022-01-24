@@ -57,6 +57,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+    keyword="%" + params[:search].to_s + "%"
+    @products = Product.find_by_sql ["Select * from products WHERE name like ? or description like ? or category like ?",keyword,keyword,keyword]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

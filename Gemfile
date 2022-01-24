@@ -58,3 +58,5 @@ gem 'jquery-rails'
 gem 'devise'
 
 gem 'pundit'
+
+gem 'activemerchant'

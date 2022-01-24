@@ -1,0 +1,55 @@
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <% flash.each do |type, msg| %>
+            <div>
+            <%= msg %>
+            </div>
+        <% end %>
+        <div class="billing_details">
+        <%= form_with do |form| %>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.text_field :first_name, class:"form-control", placeholder:"First name" %>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.text_field :last_name, class:"form-control", placeholder:"Last name" %>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.number_field :card_number, class:"form-control", placeholder:"Card number" %>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.text_field :month, class:"form-control", placeholder:"Date of expirty" %>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.number_field :year, class:"form-control", placeholder:"year" %>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <%= form.text_field :verification_value, class:"form-control", placeholder:"Security code" %>
+                        </div>
+                </div>
+                    
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a>Product <span>Total</span></a></li>
+                            <% @cart.line_items.each do |line_item| %>
+                                <li><a ><%= line_item.product.name %><span class="middle">x <%= line_item.quantity %></span> <span class="last">$<%= line_item.total_price %></span></a></li>
+                            <% end %>
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Total <span>$<%= @cart.total_price %></span></a></li>
+                        </ul>
+                        <%= form.submit "Proceed to pay", class:"primary-btn"%>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->

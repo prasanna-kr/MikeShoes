@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
   resources :line_items
-  resources :carts
-  resources :products
+  resources :carts do
+    get 'checkout'
+    post 'checkout'
+    get 'purchase_complete'
+  end
+  resources :products do
+    collection do
+      get 'search'
+      post 'search'
+    end
+  end
   get 'users/index'
   devise_for :users
   resources :users, :only=>[:show,:edit]
