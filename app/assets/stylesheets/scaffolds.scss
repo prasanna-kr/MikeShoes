@@ -64,3 +64,19 @@
 
 // label {
 //   display: block; }
+.icon-wrapper{
+    position:relative;
+    float:left;
+}
+.badge{
+    line-height: 10px !important;
+    background: rgba(0,0,0,0.5);
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 50%;
+    position:absolute;
+    top:20px;
+    right:-10px;
+    padding:3px;
+}

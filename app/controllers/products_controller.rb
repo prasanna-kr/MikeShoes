@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  respond_to :js
 
   # GET /products or /products.json
   def index
@@ -65,6 +66,8 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
+      @cart = current_cart
+      p "cart>>>>>>>>>>#{@cart.inspect}"
       @product = Product.find(params[:id])
       authorize @product
     end

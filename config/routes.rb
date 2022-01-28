@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       post 'search'
     end
   end
+  post 'line_items/create'
   get 'users/index'
   devise_for :users
   resources :users, :only=>[:show,:edit]
