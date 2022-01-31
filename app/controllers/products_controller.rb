@@ -1,10 +1,11 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  respond_to :js
+  # respond_to :js
 
   # GET /products or /products.json
   def index
     @products = Product.all
+    @current_cart = current_cart
   end
 
   # GET /products/1 or /products/1.json
@@ -50,6 +51,7 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1 or /products/1.json
   def destroy
+    p "product>>>>>>>#{@product.inspect}"
     @product.destroy
 
     respond_to do |format|
@@ -74,7 +76,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :description, :category, :price, :product_image)
+      params.require(:product).permit(:name, :description, :category, :price,:stock, :product_image)
       # authorize :product
     end
 end

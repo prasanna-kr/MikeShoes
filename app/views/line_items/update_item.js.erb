@@ -1,0 +1,10 @@
+
+
+var value = Number(document.getElementById("sst").value)
+$('#incrementBtn').click(function() {
+    $('#sst').val(value+1)
+})
+$('#decrementBtn').click(function() {
+    $('#sst').val(value-1)
+})
+$('#total_cart_items_badge').html("<%= @current_cart.line_items.count %>");

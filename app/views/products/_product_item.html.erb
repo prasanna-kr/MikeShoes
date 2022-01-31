@@ -1,0 +1,67 @@
+<!-- single product -->
+
+<div class="col-lg-4 col-md-6">
+    <div class="single-product">
+      <%= image_tag product.product_image, class:"img-fluid" %>
+      <%# <img class="img-fluid" src="/assets/product/p1.jpg" alt=""> %>
+      <div class="product-details">
+        <h6><%= product.name %></h6>
+        <div class="price">
+          <h6>$<%= product.price %></h6>
+          <%# <h6 class="l-through">$210.00</h6> %>
+        </div>
+        <div class="prd-bottom">
+
+            <div class="social-info">
+          <%# <%= link_to line_items_path(:product_id => product.id), method: :post, class: "social-info" do%>
+            <span class="ti-bag"></span>
+                <div class="hover-text">
+              <%= form_with url: "/line_items/update_item",  method: :post, local: false, id: "form" do |form| %> 
+                <div class="product_count">
+                  <%= form.hidden_field :product_id, value: product.id %>
+                  <%= form.number_field :quantity, 
+                    class:"input-text qty", 
+                    id:"sst",
+                    name:"quantity",
+                    max: product.stock,
+                    value: product.get_line_items_quantity(session[:cart_id]) %>
+                  
+                  <%= button_tag(
+                    type: 'submit', 
+                    class: "increase items-count",
+                    name: "incrementBtn",
+                    id: "incrementBtn",
+                    ) do %>
+                    <i class="lnr lnr-chevron-up"></i>
+                  <% end %>
+                  <%= button_tag(
+                    type: 'submit', 
+                    class: "reduced items-count",
+                    name: "decrementBtn",
+                    id: "decrementBtn",
+                    value: "1"
+                    ) do %>
+                    <i class="lnr lnr-chevron-down"></i>
+                  <% end %>
+                  <!-- <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                    class="reduced items-count" name="decrementBtn" id="decrementBtn" type="button"><i class="lnr lnr-chevron-down"></i></button> -->
+                </div>  
+              <% end %>
+                </div>
+            </div>
+          <%# <% end %>
+          <%= link_to product_path(product),method: "get", class: "social-info" do%>
+            <span class="lnr lnr-move"></span>
+            <p class="hover-text">view more</p>
+          <% end %>
+          <% if policy(:product).update? %>
+            <%= link_to edit_product_path(product),method: "get", class: "social-info" do%>
+              <span class="ti-pencil"></span>
+              <p class="hover-text">Edit</p>
+            <% end %>
+            <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

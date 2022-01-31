@@ -60,3 +60,5 @@ gem 'devise'
 gem 'pundit'
 
 gem 'activemerchant'
+
+gem "administrate"

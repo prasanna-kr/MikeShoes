@@ -1,11 +1,11 @@
 <!--================Single Product Area =================-->
-<p id="notice"><%= notice %></p>
 <div class="product_image_area">
   <div class="container">
     <%= form_with url: "/line_items", class:"d-flex justify-content-between", method: :post do |form| %>
-      <%= form.hidden_field :product_id, value: @product.id %>
-      <div class="row s_product_inner">
-        <div class="col-lg-6">
+    <%= form.hidden_field :product_id, value: @product.id %>
+    <div class="row s_product_inner">
+      <div class="col-lg-6">
+          <p id="notice"><%= notice %></p>
           <div class="single-prd-item">
             <%= image_tag @product.product_image, class:"img-fluid" %>
           </div>
@@ -16,12 +16,12 @@
             <h2>$<%= @product.price %></h2>
             <ul class="list">
               <li><a class="active" href="#"><span>Category</span> : <%= @product.category %></a></li>
-              <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+              <li><a href="#"><span>Availibility</span>:<%= @product.stock %> In Stock</a></li>
             </ul>
             <p><%= @product.description %></p>
             <div class="product_count">
               <label for="qty">Quantity:</label>
-              <%= form.text_field :quantity, class:"input-text qty", id:"sst",name:"quantity",value: @product.get_line_items_quantity(@cart.id), local: :true %>
+              <%= form.text_field :quantity, class:"input-text qty", id:"sst",name:"quantity",value: @product.get_line_items_quantity(@cart.id),maxlength:@product.stock, local: :true %>
               <%# <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty"> %>
               <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>

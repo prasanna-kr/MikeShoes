@@ -20,26 +20,49 @@ class LineItemsController < ApplicationController
   def edit
   end
 
+  def update_item
+    @cart = current_cart
+	  product = Product.find(params[:product_id])
+    qty = params[:quantity]
+    if qty.to_i < product.stock
+      @line_item = @cart.add_product(product.id,qty.to_i)
+  
+      respond_to do |format|
+        if @line_item.save
+          format.js
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      format.html { render :new, status: :unprocessable_entity, notice: "Stock not available" }
+      format.json { render json: @line_item.errors, status: :unprocessable_entity }
+    end
+  end
+
   # POST /line_items or /line_items.json
   def create
     @cart = current_cart
 	  product = Product.find(params[:product_id])
     qty = params[:quantity] 
-    p "cart>>>>>>>>>>>>>#{qty.class}"
-	  @line_item = @cart.add_product(product.id,qty.to_i+ 1)
-    # p "product>>>>>>>>>>>>>#{product.inspect}"
-    # p "line_item>>>>>>>>>>>>>#{@line_item.inspect}"
-    # @line_item = LineItem.new(line_item_params)
+    if qty.to_i < product.stock
+      @line_item = @cart.add_product(product.id,qty)
 
-    respond_to do |format|
-      if @line_item.save
-        # format.html { redirect_to @line_item.cart, notice: "Line item was successfully created." }
-        # format.json { render :show, status: :created, location: @line_item }
-        format.js
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @line_item.save
+          format.html { redirect_to @line_item.cart, notice: "Line item was successfully created." }
+          format.json { render :show, status: :created, location: @line_item }
+          # format.js
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      flash[:notice] = "Stock not available"
+      # format.html { render :new, status: :unprocessable_entity, notice: "Stock not available" }
+      # format.json { render json: @line_item.errors, status: :unprocessable_entity }
     end
   end
 
@@ -74,6 +97,6 @@ class LineItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def line_item_params
-      params.require(:line_item).permit(:quantity, :cart_id, :product_id)
+      params.require(:line_item).permit(:quantity, :cart_id, :product_id,:incrementBtn,:decrementBtn)
     end
 end
