@@ -21,11 +21,20 @@
                                     aria-expanded="false">Shop</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><%= link_to 'Products', products_path, class: 'nav-link', method: "get" %></li>
-                                    <li class="nav-item"><%= link_to 'Cart', cart_path(session[:cart_id]), class: 'nav-link', method: "get" %></li>
+                                    <% if !session[:cart_id].nil? %>
+                                        <li class="nav-item"><%= link_to 'Cart', cart_path(session[:cart_id]), class: 'nav-link', method: "get" %></li>
+                                    <% end %>
                                 </ul>
                             </li>
                             <%# <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li> %>
                         </ul>
+                        <% if policy(:user).show? %>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="nav-item">
+                                    <%= link_to 'Admin', admin_root_path, :class => 'nav-link', method: "get"  %>
+                                </li>
+                            </ul>
+                        <% end %>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="nav-item">
                                 <%= link_to 'Edit profile', edit_user_registration_path, :class => 'nav-link', method: "get"  %>
@@ -35,20 +44,22 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="nav-item">
-                                <%= link_to cart_path(session[:cart_id]), class: 'nav-link', method: "get" do %>
-                                <%# <a href="#" class="cart"> %>
-                                <div class="icon-wrapper">
-                                    <span class="ti-bag "></span>
-                                        <% if @current_cart.nil? %>
-                                            <span class="badge" id="total_cart_items_badge">0</span>
-                                        <% else %>
-                                            <span class="badge" id="total_cart_items_badge"><%= @current_cart.line_items.count %></span>
-                                        <% end %>    
-                                    </div>
-                                    <%# </a> %>
-                                <% end %>
-                            </li>
+                            <% if !session[:cart_id].nil? %>
+                                <li class="nav-item">
+                                    <%= link_to cart_path(session[:cart_id]), class: 'nav-link', method: "get" do %>
+                                    <%# <a href="#" class="cart"> %>
+                                    <div class="icon-wrapper">
+                                        <span class="ti-bag "></span>
+                                            <% if @current_cart.nil? %>
+                                                <span class="badge" id="total_cart_items_badge">0</span>
+                                            <% else %>
+                                                <span class="badge" id="total_cart_items_badge"><%= @current_cart.line_items.count %></span>
+                                            <% end %>    
+                                        </div>
+                                        <%# </a> %>
+                                    <% end %>
+                                </li>
+                            <% end %>                            
                             <li class="nav-item">
                                 <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                             </li>

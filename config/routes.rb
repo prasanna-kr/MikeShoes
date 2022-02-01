@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
-  resources :line_items
-  resources :carts do
+  resources :orders do
     get 'checkout'
     post 'checkout'
     get 'purchase_complete'
   end
+  namespace :admin do
+      resources :users
+      resources :orders
+      # resources :carts
+      root to: "users#index"
+    end
+  resources :line_items
+  resources :carts
   resources :products do
     collection do
       get 'search'

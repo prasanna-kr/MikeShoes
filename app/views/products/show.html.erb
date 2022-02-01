@@ -1,11 +1,11 @@
 <!--================Single Product Area =================-->
-<div class="product_image_area">
+<div class="product_image_area" data-controller="product-form">
   <div class="container">
     <%= form_with url: "/line_items", class:"d-flex justify-content-between", method: :post do |form| %>
     <%= form.hidden_field :product_id, value: @product.id %>
     <div class="row s_product_inner">
       <div class="col-lg-6">
-          <p id="notice"><%= notice %></p>
+          <!-- <p id="notice"><%= notice %></p> -->
           <div class="single-prd-item">
             <%= image_tag @product.product_image, class:"img-fluid" %>
           </div>
@@ -16,18 +16,54 @@
             <h2>$<%= @product.price %></h2>
             <ul class="list">
               <li><a class="active" href="#"><span>Category</span> : <%= @product.category %></a></li>
-              <li><a href="#"><span>Availibility</span>:<%= @product.stock %> In Stock</a></li>
+              <li><a href="#"><span>Availibility</span> : <%= @product.stock %> In Stock</a></li>
             </ul>
             <p><%= @product.description %></p>
             <div class="product_count">
+              <%= form.number_field :quantity, 
+                class:"input-text qty", 
+                id:"sst",
+                name:"quantity",
+                max: @product.stock,
+                value: @product.get_line_items_quantity(session[:cart_id]), 
+                'data-target' => "product-form.quantity",
+                'data-action' => 'keyup->product-form#countCharacters'
+                %>
+              
+              <%= button_tag(
+                type: 'button', 
+                class: "increase items-count",
+                name: "incrementBtn",
+                id: "incrementBtn",
+                'data-action'=>"click->product-form#increment"
+                ) do %>
+                <i class="lnr lnr-chevron-up"></i>
+              <% end %>
+              <%= button_tag(
+                type: 'button', 
+                class: "reduced items-count",
+                name: "decrementBtn",
+                id: "decrementBtn",
+                'data-action'=>"click->product-form#decrement"
+                ) do %>
+                <i class="lnr lnr-chevron-down"></i>
+              <% end %>
+            </div>
+            <!-- <div class="product_count">
               <label for="qty">Quantity:</label>
-              <%= form.text_field :quantity, class:"input-text qty", id:"sst",name:"quantity",value: @product.get_line_items_quantity(@cart.id),maxlength:@product.stock, local: :true %>
+              <%= form.number_field :quantity, 
+                class:"input-text qty", 
+                id:"sst",
+                name:"quantity",
+                max: @product.stock,
+                value: @product.get_line_items_quantity(@cart.id)
+                %>
               <%# <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty"> %>
               <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                 class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
               <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-            </div>
+            </div> -->
             <div class="card_area d-flex align-items-center">
               <%# <a class="primary-btn" href="#">Add to Cart</a> %>
               <%= form.submit "Add to Cart", class:"primary-btn" %>

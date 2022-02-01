@@ -57,51 +57,6 @@ class CartsController < ApplicationController
     end
   end
 
-  def checkout
-    if request.post?
-      @cart = Cart.find(params[:cart_id])
-      amount = @cart.total_price
-      p "post method"
-      ActiveMerchant::Billing::Base.mode = :test
-      # Create a new credit card object
-      credit_card = ActiveMerchant::Billing::CreditCard.new(
-        :number     => params[:card_number],
-        :month      => params[:month],
-        :year       => params[:year],
-        :first_name => params[:first_name],
-        :last_name  => params[:last_name],
-        :verification_value  => params[:verification_value]
-      )
-      if credit_card.valid?
-        # Create a gateway object to the TrustCommerce service
-        gateway = ActiveMerchant::Billing::TrustCommerceGateway.new(
-          :login    => 'TestMerchant',
-          :password => 'password'
-        )
-  
-  
-  
-        response = gateway.authorize(amount.to_i, credit_card)
-        puts "=========="
-        puts response.inspect
-        if response.success?
-          # Capture the money
-          #Triger the mailer
-          session[:cart_id]=nil
-          # session[:cart_amount]=nil
-          gateway.capture(amount.to_i, response.authorization)
-          redirect_to :action=>:purchase_complete
-        end
-      else
-        flash[:notice] = "Invalid credit card. Give proper inputs"
-        render :action=>:checkout
-      end
-
-    else
-      @cart = Cart.find(params[:cart_id])
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart

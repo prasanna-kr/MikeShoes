@@ -31,3 +31,4 @@ require("packs/gmaps.min")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 global.$ = jQuery;
+require("controllers")

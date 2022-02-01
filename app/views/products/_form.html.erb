@@ -1,4 +1,4 @@
-<div class="login_form_inner">
+<div class="login_form_inner" data-controller="product-form">
   <% flash.each do |type, msg| %>
     <div>
       <%= msg %>
@@ -38,6 +38,7 @@
     <div class="col-md-12 form-group">
       <%= form.file_field :product_image,class: "form-control", placeholder: "Product Image" %>
     </div>
+    <%= form.hidden_field :user_id, value: current_user.id  %>
     <div class="col-md-12 form-group">
       <%= form.submit "Submit", class:"primary-btn" %>
     </div>

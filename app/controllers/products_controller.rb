@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+    # byebug
     @current_cart = current_cart
   end
 
@@ -76,7 +77,8 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :description, :category, :price,:stock, :product_image)
+      # user_id = current_user.id
+      params.require(:product).permit(:name, :description, :category, :price,:stock, :product_image,:user_id)
       # authorize :product
     end
 end
