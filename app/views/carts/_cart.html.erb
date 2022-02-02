@@ -1,7 +1,7 @@
  <!--================Cart Area =================-->
  <% unless cart.line_items.empty? %>
     <section class="cart_area">
-        <div class="container">
+        <div class="container" data-controller="product-form">
             <div class="cart_inner">
                 <div class="table-responsive">
                     <table class="table">
@@ -32,6 +32,39 @@
                                 </td>
                                 <td>
                                     <h5><%= line_item.quantity %></h5>
+                                    <!-- <%= form_with url: "/line_items/update_item",  method: :post, local: false, id: "form" do |form| %> 
+                                        <div class="product_count">
+                                        <%= form.hidden_field :product_id, value: line_item.product.id %>
+                                        <%= form.number_field :quantity, 
+                                            class:"input-text qty", 
+                                            id:"sst",
+                                            name:"quantity",
+                                            max: line_item.product.stock,
+                                            value: line_item.product.get_line_items_quantity(session[:cart_id]), 
+                                            'data-target' => "product-form.quantity",
+                                            'data-action' => 'keyup->product-form#countCharacters'
+                                            %>
+                                        
+                                        <%= button_tag(
+                                            type: 'submit', 
+                                            class: "increase items-count",
+                                            name: "incrementBtn",
+                                            id: "incrementBtn",
+                                            'data-action'=>"click->product-form#increment"
+                                            ) do %>
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        <% end %>
+                                        <%= button_tag(
+                                            type: 'submit', 
+                                            class: "reduced items-count",
+                                            name: "decrementBtn",
+                                            id: "decrementBtn",
+                                            'data-action'=>"click->product-form#decrement"
+                                            ) do %>
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        <% end %>
+                                        </div>  
+                                    <% end %> -->
                                     <!-- <div class="product_count">
                                         <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
                                             class="input-text qty">

@@ -2,21 +2,8 @@
   <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12">
       <!-- Start Filter Bar -->
-      <div class="filter-bar d-flex flex-wrap align-items-center">
-        <div class="sorting">
-          <select>
-            <option value="1">Default sorting</option>
-            <option value="1">Default sorting</option>
-            <option value="1">Default sorting</option>
-          </select>
-        </div>
-        <div class="sorting mr-auto">
-          <select>
-            <option value="1">Show 12</option>
-            <option value="1">Show 12</option>
-            <option value="1">Show 12</option>
-          </select>
-        </div>
+      <div class="filter-bar d-flex flex-wrap align-items-center  justify-content-end">
+        
         <%= link_to 'New Product', new_product_path,method: "get",class:"primary-btn" %>
         
       </div>
@@ -29,26 +16,24 @@
           <% end %>
           
         </div>
+        
       </section>
+      
       <!-- End Best Seller -->
       <!-- Start Filter Bar -->
       <div class="filter-bar d-flex flex-wrap align-items-center">
-        <div class="sorting mr-auto">
-          <select>
-            <option value="1">Show 12</option>
-            <option value="1">Show 12</option>
-            <option value="1">Show 12</option>
-          </select>
+        <div class="pagination-info mr-auto ">
+        
+          <span class="pull-right text-light"><%= page_entries_info(@products) %></span>
+        
         </div>
-        <div class="pagination">
-          <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#" class="dot-dot"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-          <a href="#">6</a>
-          <a href="#" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-        </div>
+        <ul class="pagination">
+        
+          <li> 
+            <%= will_paginate(@products,:previous_label => "&laquo;", :next_label => "&raquo;",:class=>"small-font text-light",:outer_window => 1,:inner_window => 0,:"data-turbolinks"=>"false") %>
+          </li>
+        
+        </ul>
       </div>
       <!-- End Filter Bar -->
     </div>

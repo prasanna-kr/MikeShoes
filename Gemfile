@@ -62,3 +62,8 @@ gem 'pundit'
 gem 'activemerchant'
 
 gem "administrate"
+
+gem 'friendly_id', '~> 5.4.0'
+
+gem 'will_paginate', '~> 3.3'
+

@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all
+    @products = Product.paginate(:page=>params[:page],:per_page=>6)
     # byebug
     @current_cart = current_cart
   end
@@ -71,7 +71,7 @@ class ProductsController < ApplicationController
     def set_product
       @cart = current_cart
       p "cart>>>>>>>>>>#{@cart.inspect}"
-      @product = Product.find(params[:id])
+      @product = Product.friendly.find(params[:id])
       authorize @product
     end
 
