@@ -32,3 +32,4 @@ require("packs/gmaps.min")
 // const imagePath = (name) => images(name, true)
 global.$ = jQuery;
 require("controllers")
+global.toastr = require("toastr")

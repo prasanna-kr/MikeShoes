@@ -32,15 +32,13 @@
 
     <!-- End Banner Area -->
 
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
+    
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
 
     <%= yield %>
-
+    <%= toastr_flash %>
     <!-- start footer Area -->
     <footer class="footer-area section_gap">
       <div class="container">

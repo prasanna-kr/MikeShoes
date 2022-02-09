@@ -17,7 +17,7 @@ export default class extends Controller {
     console.log(this.quantityTarget.max)
     let incvalue = Number(this.quantityTarget.value);
     this.quantityTarget.setCustomValidity("")
-    if(incvalue > this.quantityTarget.max) {
+    if(this.quantityTarget.max < incvalue ) {
       this.quantityTarget.setCustomValidity("Stock not available")
     } else {
       if( !isNaN( incvalue ))

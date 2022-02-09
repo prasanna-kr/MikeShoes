@@ -4,9 +4,15 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
+    @user = User.find_by(id: session[:user_id])
+    p "user>>>>>>>>#{@user.inspect}"
+    # @user_wishlists = @user.wishlist
+
     @products = Product.paginate(:page=>params[:page],:per_page=>6)
     # byebug
     @current_cart = current_cart
+
+    @wishlist = Wishlist.find_by_id(params[:wishlist_id])
   end
 
   # GET /products/1 or /products/1.json
