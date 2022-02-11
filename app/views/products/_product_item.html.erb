@@ -12,47 +12,66 @@
           <%# <h6 class="l-through">$210.00</h6> %>
         </div>
         <div class="prd-bottom">
-
-            <div class="social-info">
-          <%# <%= link_to line_items_path(:product_id => product.id), method: :post, class: "social-info" do%>
-            <span class="ti-bag"></span>
-                <div class="hover-text">
-                  <%= form_with url: "/line_items/update_item",  method: :post, local: false, id: "form" do |form| %> 
-                    <div class="product_count">
-                      <%= form.hidden_field :product_id, value: product.id %>
-                      <%= form.number_field :quantity, 
-                        class:"input-text qty", 
-                        id:"sst",
-                        name:"quantity",
-                        max: product.stock,
-                        value: product.get_line_items_quantity(session[:cart_id]), 
-                        'data-target' => "product-form.quantity",
-                        'data-action' => 'keyup->product-form#countCharacters'
-                        %>
-                      
-                      <%= button_tag(
-                        type: 'submit', 
-                        class: "increase items-count",
-                        name: "incrementBtn",
-                        id: "incrementBtn",
-                        'data-action'=>"click->product-form#increment"
-                        ) do %>
-                        <i class="lnr lnr-chevron-up"></i>
-                      <% end %>
-                      <%= button_tag(
-                        type: 'submit', 
-                        class: "reduced items-count",
-                        name: "decrementBtn",
-                        id: "decrementBtn",
-                        'data-action'=>"click->product-form#decrement"
-                        ) do %>
-                        <i class="lnr lnr-chevron-down"></i>
-                      <% end %>
-                    </div>  
-                  <% end %>
-                </div>
+          <div class="social-info">
+            <span class="lnr lnr-heart"></span>
+            <div class="hover-text">
+              <% if product.isWishlistAdded(current_user.id).nil? %>
+                <%= form_with url: "/wishlists",  method: :post, local: true, id: "form" do |form| %>
+                  <%= hidden_field_tag :user_id, current_user.id.to_i %>
+                  <%= hidden_field_tag :product_id, product.id.to_i %> 
+                  <%= form.submit "Add to wishlist"%>
+                  <!-- <p>wishlist</p> -->
+                <% end %>
+              <% else %>
+                <%= form_with url: "/wishlists/#{product.isWishlistAdded(current_user.id)}",  method: :delete, data: { confirm: 'Are you sure?' }, local: true, id: "form" do |form| %>
+                  <%= hidden_field_tag :user_id, current_user.id.to_i %>
+                  <%= hidden_field_tag :product_id, product.id.to_i %> 
+                  <%= form.submit "Remove from wishlist"%>
+                  <!-- <p>wishlist</p> -->
+                <% end %>
+              <% end %>
             </div>
-          <%# <% end %>
+            <!-- <%= link_to product_path(product),method: "get", class: "social-info" do%>
+            <% end %> -->
+          </div>
+          <div class="social-info">
+            <span class="ti-bag"></span>
+            <div class="hover-text">
+              <%= form_with url: "/line_items/update_item",  method: :post, local: false, id: "form" do |form| %> 
+                <div class="product_count">
+                  <%= form.hidden_field :product_id, value: product.id %>
+                  <%= form.number_field :quantity, 
+                    class:"input-text qty", 
+                    id:"sst",
+                    name:"quantity",
+                    max: product.stock,
+                    value: product.get_line_items_quantity(session[:cart_id]), 
+                    'data-target' => "product-form.quantity",
+                    'data-action' => 'keyup->product-form#countCharacters'
+                    %>
+                  
+                  <%= button_tag(
+                    type: 'submit', 
+                    class: "increase items-count",
+                    name: "incrementBtn",
+                    id: "incrementBtn",
+                    'data-action'=>"click->product-form#increment"
+                    ) do %>
+                    <i class="lnr lnr-chevron-up"></i>
+                  <% end %>
+                  <%= button_tag(
+                    type: 'submit', 
+                    class: "reduced items-count",
+                    name: "decrementBtn",
+                    id: "decrementBtn",
+                    'data-action'=>"click->product-form#decrement"
+                    ) do %>
+                    <i class="lnr lnr-chevron-down"></i>
+                  <% end %>
+                </div>  
+              <% end %>
+            </div>
+          </div>
           <%= link_to product_path(product),method: "get", class: "social-info" do%>
             <span class="lnr lnr-eye"></span>
             <p class="hover-text">view more</p>

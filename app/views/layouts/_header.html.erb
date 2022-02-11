@@ -21,6 +21,7 @@
                                     aria-expanded="false">Shop</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><%= link_to 'Products', products_path, class: 'nav-link', method: "get" %></li>
+                                    <li class="nav-item"><%= link_to 'Wishlists', wishlists_path, class: 'nav-link', method: "get" %></li>
                                     <% if !session[:cart_id].nil? %>
                                         <li class="nav-item"><%= link_to 'Cart', cart_path(session[:cart_id]), class: 'nav-link', method: "get" %></li>
                                     <% end %>

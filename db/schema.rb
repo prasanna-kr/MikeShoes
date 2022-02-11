@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_07_062926) do
+ActiveRecord::Schema.define(version: 2022_02_09_042415) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -101,10 +101,10 @@ ActiveRecord::Schema.define(version: 2022_02_07_062926) do
 
   create_table "wishlists", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "products_id", null: false
+    t.integer "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["products_id"], name: "index_wishlists_on_products_id"
+    t.index ["product_id"], name: "index_wishlists_on_product_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
@@ -114,6 +114,6 @@ ActiveRecord::Schema.define(version: 2022_02_07_062926) do
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "carts"
   add_foreign_key "orders", "users"
-  add_foreign_key "wishlists", "products", column: "products_id"
+  add_foreign_key "wishlists", "products"
   add_foreign_key "wishlists", "users"
 end
